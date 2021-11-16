@@ -26,8 +26,7 @@ Scanner sc = new Scanner(System.in);
                     + "\n 2-Eliminar nodos"
                     + "\n 3-Mostrar lista"
                     + "\n 4-Generar palabra"
-                    + "\n 5-Buscar nodo"
-                    + "\n 6-Salir ");
+                    + "\n 5-Salir");
 
             switch (opc = sc.nextInt()) { 
                 case 1:  //caso uno Agregar
@@ -45,12 +44,8 @@ Scanner sc = new Scanner(System.in);
                 case 4: //caso tres Generar
                     n.Generar();
                     break;
-
-                case 5: //caso tres Buscar
-                    n.Buscar();
-
             }
-        } while (opc != 6);   
+        } while (opc !=5);   
     }
     Nodo inicial = null; 
 
@@ -108,33 +103,5 @@ Scanner sc = new Scanner(System.in);
                  inicial=post; 
            }
         }
-
-    public void Buscar() {
-        int cont = 0;
-        Nodo post = new Nodo();
-        Boolean Encontrado = true;
-        String valor;
-        post = inicial;
-
-        if (inicial != null) {
-            System.out.println("Ingrese el nodo a buscar");
-            valor = sc.nextLine();
-            
-            if (post != null && Encontrado != true) {
-
-                if (post.Name == valor) {
-                    Encontrado = true;
-                    cont++;
-                    System.out.println("El dato encontrado es: " + valor + "en posición: " + cont);
-                } else {
-                    post = post.next;
-                }
-            } else {
-                System.out.println("El dato a buscar si se encuentra es: " + valor );
-            }
-        } else {
-            System.out.println("Lista vacia");
-        }
-    }
 
 }
