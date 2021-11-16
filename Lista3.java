@@ -16,40 +16,41 @@ Scanner sc = new Scanner(System.in);
     
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int opc; //se declara variable de opcion para el menu
+        int opc; 
         Lista3 n = new Lista3();
 
-        do { //se abre un do while para nuestro menu
+        do { 
 
             System.out.println("\n Menu de opciones ingrese una opción :"
                     + "\n 1-Agregar nodo "
                     + "\n 2-Eliminar nodos"
                     + "\n 3-Mostrar lista"
                     + "\n 4-Generar palabra"
-                    + "\n 5-Salir ");
+                    + "\n 5-Buscar nodo"
+                    + "\n 6-Salir ");
 
-            switch (opc = sc.nextInt()) { //Se abre un switch para evaluar lo que elija el usuario de a cuerdo al menu
-
+            switch (opc = sc.nextInt()) { 
                 case 1:  //caso uno Agregar
                     n.Agregar();  //se manda a traer el metodo agregar de la case Nodo22
                     break; 
 
                 case 2: //caso dos Eliminar
                     n.Eliminar(); //se manda a traer el metodo eliminar de la clase Nodo22
-                    break;
+                    break;  
 
                 case 3: //caso tres Mostrar
                     n.Mostrar(); //se manda a traer el metodo mostrar de la clase Nodo22
-                    break;  
+                    break; 
 
-                case 4:
+                case 4: //caso tres Generar
                     n.Generar();
                     break;
 
-                
+                case 5: //caso tres Buscar
+                    n.Buscar();
 
             }
-        } while (opc != 5);   
+        } while (opc != 6);   
     }
     Nodo inicial = null; 
 
@@ -90,24 +91,50 @@ Scanner sc = new Scanner(System.in);
     }
 
     public void Generar(){
-         char L1,L2,L3,L4,L5;
-         Random r= new Random (); 
-         L1 = (char)(r.nextInt(26)+'A');
-         L2 = (char)(r.nextInt(74)+48);
-         L3 = (char)(r.nextInt(74)+48);
-         L4 = (char)(r.nextInt(74)+48);
-         L5 = (char)(r.nextInt(14)+33);
-         
-         if (inicial== null) { 
-            inicial = new Nodo (); 
-            inicial.Name = (""+L1+L2+L3+L4+L5+""); 
-        } else {  Nodo post = new Nodo (); 
-                  post.Name = (""+L1+L2+L3+L4+L5+""); 
-                  post.next= inicial; 
-                  inicial=post; 
-            }
-    }
+        char L1,L2,L3,L4,L5;
+        Random r= new Random (); 
+        L1 = (char)(r.nextInt(26)+'A');
+        L2 = (char)(r.nextInt(74)+48);
+        L3 = (char)(r.nextInt(74)+48);
+        L4 = (char)(r.nextInt(74)+48);
+        L5 = (char)(r.nextInt(14)+33);
+        
+        if (inicial== null) { 
+           inicial = new Nodo (); 
+           inicial.Name = (""+L1+L2+L3+L4+L5+""); 
+       } else {  Nodo post = new Nodo (); 
+                 post.Name = (""+L1+L2+L3+L4+L5+""); 
+                 post.next= inicial; 
+                 inicial=post; 
+           }
+        }
 
-   
+    public void Buscar() {
+        int cont = 0;
+        Nodo post = new Nodo();
+        Boolean Encontrado = true;
+        String valor;
+        post = inicial;
+
+        if (inicial != null) {
+            System.out.println("Ingrese el nodo a buscar");
+            valor = sc.nextLine();
+            
+            if (post != null && Encontrado != true) {
+
+                if (post.Name == valor) {
+                    Encontrado = true;
+                    cont++;
+                    System.out.println("El dato encontrado es: " + valor + "en posición: " + cont);
+                } else {
+                    post = post.next;
+                }
+            } else {
+                System.out.println("El dato a buscar si se encuentra es: " + valor );
+            }
+        } else {
+            System.out.println("Lista vacia");
+        }
+    }
 
 }
