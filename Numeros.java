@@ -1,163 +1,155 @@
 package numeros;
-
+import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * @author Judith Ramales
+ */
 public class Numeros {
 
     Scanner sc = new Scanner(System.in);
 
-    static class Nodo {  
-
-        int num;
-        Nodo sig;
-        Nodo ant;
+    static class Nodo {
+        int Dato;
+        Nodo Next;
     }
-
-    public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-        int opc;
-        Numeros n = new Numeros();
-
-        do {
-
-            System.out.println("\n Menu de opciones ingrese una opción :"
-                    + "\n 1-Generar 500 Nodos "
-                    + "\n 2-Mostrar los 500 Nodos"
-                    + "\n 3-Ordenar de Mayor-Menor"
-                    + "\n 4-Ordenar de Menor-Mayor"
-                    + "\n 5-Eliminar repetidos"
-                    + "\n 6-Agregar faltantes"
-                    + "\n 7-Salir ");
-
-            switch (opc = sc.nextInt()) { //Se abre un switch para evaluar lo que elija el usuario de a cuerdo al menu
-
-                case 1:  //caso uno Agregar
-                    n.Agregar();  
-                    break; 
-                case 2: //caso dos Mostrar
-                    n.Mostrar(); 
-                    break; 
-
-                case 3: //caso tres Ordenar MAyor a Menor
-                    n.Mayor(); 
-                    break; 
-
-                case 4: //caso cuatro Ordenar MEnor Mayor
-                    n.Menor(); 
-                    break; 
-
-                case 5: //caso cinco Eliminar repetidas
-                    n.Repetidos(); 
-                    break;
-             } //cierra caso cinco
-
-                case 6: //caso seis Rellenar Faltantes
-                    n.Faltantes();  
-                    break; 
-            }
-        } while (opc != 7);
-    }
-
-    Nodo inicio = null;
+    int nodos=500;
+    Nodo inicial = null;
     Nodo fin = null;
-
-    public void Agregar() {
-        for (int k = 0; k <= 499; k++) {
-            Nodo poc = new Nodo();
-
-            poc.num = (int) (Math.random() * 500);
-
-            if (inicio == null) {
-
-                inicio = poc;
-                inicio.sig = null;
-                fin = poc;
-
-            } else {
-
-                fin.sig = poc;
-                poc.sig = null;
-                fin = poc;
-
+     
+    public void Llenar() {
+        int [] conparar =new int [501];
+        if(inicial==null){
+            inicial = new Nodo();
+            inicial.Next = null;
+            for (int i = 2; i <= 500; i++) {
+                int Numeros = ((int) (Math.random() * 500 + 0));
+                conparar[i]=Numeros;
+                Nodo temp;
+                temp = new Nodo();
+                temp.Dato = Numeros;
+                temp.Next = inicial;
+                        
+                inicial = temp;
             }
+            System.out.println("\n"+"Datos agregados"+conparar);
+        }else{
+            System.out.println("\n"+"Seleccione la opcion 5!!!");
         }
-        System.out.println("valores agregados");
     }
 
-    //METODO MOSTRAR NODOS
     public void Mostrar() {
         Nodo actual = new Nodo();
-        actual = inicio;
-
-        if (inicio != null) {
-
+        actual = inicial;
+        if (inicial != null) {
             while (actual != null) {
-                System.out.println("" + "[ " + actual.num + " ]");
-
-                actual = actual.sig;
+                for (int i = 1; i <= nodos; i++) {
+                System.out.println("Nodo "+i+" [ " + actual.Dato + " ] ");
+                actual = actual.Next;
             }
-
-        } else {
-
-            System.out.println("la lista esta vacia");
-
-        }
+        }}
+    }
+    
+    public void Ordenar() {
+        int  au;
+        if (inicial != null) {
+            System.out.println("\n"+"Datos ordenados ");
+            for (int cont = 1; cont <= 500; cont++) {
+                Nodo anterior = new Nodo();
+                anterior = inicial;
+                Nodo actual = new Nodo();
+                actual = anterior.Next;
+                for (int i = 0; i <= 500 - 1; i++) {
+                    for (int j = 0; j <= 500 - 1; j++) {
+                        while (anterior.Next != null) {
+                            if (anterior.Dato == actual.Dato) {
+                                au = anterior.Dato;
+                                anterior.Dato = actual.Dato;
+                                actual.Dato = au;
+                            }
+                            anterior = actual;
+                            actual = anterior.Next;
+                       }break;
+                   }
+              }
+           }
+       }
     }
 
-    public void Mayor() {
-        Nodo actual = new Nodo();
-        actual = inicio;
-       Nodo aux;
-        for (int i = 0; i < (499 - 1); i++) {
-            for (int j = 0; j < (actual.num - 1); j++) {
-                if (actual.num > actual.sig) {
-
-                }
-            }
-        }
-    }
-
-    public void Menor() {
-        Nodo actual = new Nodo();
-        actual = inicio;
-       Nodo aux;
-        for (int i = 0; i < (499 - 1); i++) {
-            for (int j = 0; j < (actual.num - 1); j++) {
-                if (actual.num < actual.sig) {
-
-                }
-            }
-        }
-    }
-    }
-
-    public void Repetidos() {
-        Nodo t1, t2;
-
-        t1 = inicio;
-
-        while (t1 != null) {
-            t2 = t1.sig;
-            while (t2 != null) {
-                if (t1.num == t2.num) {
-                    if (t2 == fin) {
-                        fin = t2.ant;
-                        fin.sig = null;
-                    } else {
-                        (t2.sig).sig = t2.sig;
-                        (t2.sig).ant = t2.ant;
-
+    public void Eliminarepet() {
+        int  au;
+        if (inicial != null) {
+            for (int cont = 1; cont <= 500; cont++) {
+                Nodo anterior = new Nodo();
+                anterior = inicial;
+                Nodo actual = new Nodo();
+                actual = anterior.Next;
+                for (int i = 0; i <= 500 - 1; i++) {
+                    for (int j = 0; j <= 500 - 1; j++) {
+                        while (anterior.Next != null) {
+                            if (anterior.Dato == actual.Dato) {
+                                int contador=1;
+                                contador++;
+                                System.out.println(contador);
+                            }
+                        } break;
                     }
                 }
-                t2 = t2.sig;
             }
-            t1 = t1.sig;
+        } else {
+            System.out.print("\n" + "La lista esta vacia!!!");
         }
-        System.out.println("Valores repetidos eliminados");
+        System.out.println("");
+        }
+
+    public void Agregarfaltante() {
+        for (int i = nodos; i <= 499; i++) {
+            int Numeros2 = ((int) (Math.random() * 9 + 1));
+            Nodo temp;
+            temp = new Nodo();
+            temp.Dato = Numeros2;
+            temp.Next = inicial;
+            inicial = temp;
+            nodos++;
+        }
+        System.out.print("\n" + "La lista esta llena!!!");
     }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Numeros n = new Numeros();
+        int opc;
 
-    public void Faltantes() {
+        do {
+            System.out.print("\nMenu."
+                    + "\n 1- Llenar "
+                    + "\n 2- Mostrar"
+                    + "\n 3- Ordenar "
+                    + "\n 4- Eliminar repetidos"
+                    + "\n 5- Agregar faltantes"
+                    + "\n 6- Salir"
+                    + "\nSeleccione la opcion a realizar:");
 
+            switch (opc = sc.nextInt()) {
+                case 1:
+                    n.Llenar();
+                    break;
+
+                case 2:
+                    n.Mostrar();
+                    break;
+
+                case 3:
+                    n.Ordenar();
+                    break;
+
+                case 4:
+                    n.Eliminarepet();
+                    break;
+
+                case 5:
+                    n.Agregarfaltante();
+                    break;
+            }
+        } while (opc != 6);
     }
 }
